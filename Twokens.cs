@@ -1234,10 +1234,10 @@ namespace Twokens
             NativeMethod.CloseHandle(localProcessHandle);
             return processTokens.ToArray();
         }
-        private static void PutToken(List<ProcessToken> list, ProcessToken processToken)
+        private static void PutToken(List<ProcessToken> list, ProcessToken customerToken)
         {
 
-            if (processToken == null)
+            if (customerToken == null)
             {
                 return;
             }
@@ -1246,25 +1246,25 @@ namespace Twokens
             for (int i = 0; i < list.Count; i++)
             {
                 ProcessToken processTokenNode = list[i];
-                if (processTokenNode.UserName == processToken.UserName)
+                if (processTokenNode.UserName == customerToken.UserName)
                 {
-                    if (processToken.ImpersonationLevel > processTokenNode.ImpersonationLevel ||
-                        (processToken.ImpersonationLevel >= TokenImpersonationLevel.Impersonation && processToken.ImpersonationLevel > processTokenNode.ImpersonationLevel && (processToken.TokenElevationType == TOKEN_ELEVATION_TYPE.TokenElevationTypeFull || processToken.IntegrityLevel > processTokenNode.IntegrityLevel)))
+                    if (customerToken.ImpersonationLevel > processTokenNode.ImpersonationLevel ||
+                        (customerToken.ImpersonationLevel >= TokenImpersonationLevel.Impersonation && customerToken.ImpersonationLevel > processTokenNode.ImpersonationLevel && (customerToken.TokenElevationType == TOKEN_ELEVATION_TYPE.TokenElevationTypeFull || customerToken.IntegrityLevel > processTokenNode.IntegrityLevel)))
                     {
-                        if (!processToken.IsRestricted)
+                        if (!customerToken.IsRestricted)
                         {
                             processTokenNode.Close();
-                            list[i] = processToken;
+                            list[i] = customerToken;
                         }
                     }
                     else
                     {
-                        processToken.Close();
+                        customerToken.Close();
                     }
                     return;
                 }
             }
-            list.Add(processToken);
+            list.Add(customerToken);
 
         }
 
@@ -1339,7 +1339,7 @@ namespace Twokens
             if (CreateProcess(tokenHandle, commandLine, true, (uint)ProcessCreateFlags.CREATE_NO_WINDOW, ref startupInfo,
                     out processInformation))
             {
-                consoleWriter.WriteLine($"[*] process start with pid {processInformation.dwProcessId}");
+                consoleWriter.WriteLine($"[{processInformation.dwProcessId}] Get OUT !!! ");
 
                 NativeMethod.CloseHandle(cpWrite);
                 cpWrite = IntPtr.Zero;

