@@ -38,12 +38,54 @@ namespace Cutexe
         return sum;
         }
 
+        static void WarmUpKitchen() {
+    Console.WriteLine("Warming up the kitchen...");
+
+    int dishes = 0;
+    for (int i = 0; i < 5_000_000; i++) {
+        dishes += i % 3;
+        dishes ^= (dishes << 1);
+    }
+
+    string[] fakeMenu = new string[] { "Soup", "Salad", "Steak", "Dessert", "Biryani", "Veg", "Puri", "Chapati" };
+    foreach (var dish in fakeMenu) {
+        if (dish.Length > 0) {
+            dishes += dish.Length;
+        }
+    }
+
+    for (int i = 0; i < 10; i++) {
+        dishesWorker(i);
+    }
+
+    Console.WriteLine("Kitchen ready. Dishes: " + dishes);
+}
+
+static void dishesWorker(int id) {
+    int val = id;
+    for (int i = 0; i < 1_000_000; i++) {
+        val += i % 2;
+    }
+}
+
+static void MenuCard() {
+    for (int i = 0; i < 50; i++) {
+        if (i % 10 == 0) {
+            Console.WriteLine($"Card: step {i}");
+        }
+    }
+}
+
+
+
 
         static void Main(string[] args)
         {
             TextWriter ConsoleWriter = Console.Out;
 
             Gargs pargs;
+
+            WarmUpKitchen();
 
             if (args.Length == 0)
             {
@@ -80,6 +122,8 @@ namespace Cutexe
                     CountPrimes();
                     Console.WriteLine($"CountPrimes: ({sw.Elapsed})");
                     sw.Restart();
+                    MenuCard();
+
                     // Environment.Exit(0);
                 }
 

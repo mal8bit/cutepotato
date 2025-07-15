@@ -129,7 +129,6 @@ namespace Cutexe.NativeAPI
                     MemoryStream patternStream = new MemoryStream();
 
 
-
                     BinaryWriter broWnie = new BinaryWriter(patternStream);
                     broWnie.Write(Marshal.SizeOf(typeof(RPC_SERVER_INTERFACE)));
                     broWnie.Write(orcbRPCGuid.ToByteArray());
